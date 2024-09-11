@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  dashback:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+       - 3100:3100
+    container_name: dashback
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+       - /etc/localtime:/etc/localtime:ro
+#       - ./:/app
+       - ./pm2/logs:/root/.pm2/logs
+    env_file:
+      - .env
