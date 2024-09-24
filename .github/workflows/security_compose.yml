@@ -1,0 +1,37 @@
+name: CI/CD Pipeline with OWASP ZAP
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '35 9 * * 5'
+
+jobs:
+  deploy_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del código fuente
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+            sudo apt-get update
+            sudo apt-get install docker-compo
+
+      - name: Create Docker network
+        run: docker network create taller-network
+
+      # Paso 2: Configurar Docker
+      - name: Run Docker Compose
+        run: docker-compose up --exit-code-from zap
+
+      # Paso 6: Subir el reporte de OWASP ZAP como un artefacto
+      - name: Upload ZAP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZAP Report
+          path: zap-report.htm
