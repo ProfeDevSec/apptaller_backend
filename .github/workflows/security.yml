@@ -34,15 +34,13 @@ jobs:
         run: sleep 15
 
       # Paso 5: Realizar pruebas con OWASP ZAP
-      - name: OWASP ZAP full scan
-        uses: zaproxy/action-full-scan@v0.10.0
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@41aee98ebc7cf2802c3beae4e7d4336413a21e43 # v0.9.0
         with:
-          target: 'http://localhost:3100'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: 'http://backend_container:3100'
           rules_file_name: '.zap/rules.tsv'
-#          docker_name: 'zap'
-          generate_report: true
-          report_html: 'zap-report.html'
-          cmd_options: '-a'
+          cmd_options: '-a -j'
 
       # Paso 6: Subir el reporte de OWASP ZAP como un artefacto
       - name: Upload ZAP report
