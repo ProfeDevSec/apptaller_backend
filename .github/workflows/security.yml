@@ -27,7 +27,7 @@ jobs:
 
       # Paso 4: Iniciar el contenedor Docker en segundo plano
       - name: Run Docker container
-        run: docker run -d -p 3000:3000 --name backend_container myapp:latest
+        run: docker run -d -p 3100:3100 --name backend_container backend:latest
 
       # Esperar unos segundos para asegurarse de que la aplicación esté en ejecución
       - name: Wait for app to start
