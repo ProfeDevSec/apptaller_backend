@@ -39,7 +39,7 @@ jobs:
         with:
           target: 'http://localhost:3100'
           rules_file_name: '.zap/rules.tsv'
-          docker_name: 'zap'
+#          docker_name: 'zap'
           generate_report: true
           report_html: 'zap-report.html'
           cmd_options: '-a'
