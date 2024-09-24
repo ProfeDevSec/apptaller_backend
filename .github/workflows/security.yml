@@ -2,8 +2,11 @@ name: CI/CD Pipeline with OWASP ZAP
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  schedule:
+    - cron: '35 9 * * 5'
 
 jobs:
   deploy_and_test:
@@ -28,7 +31,7 @@ jobs:
 
       # Esperar unos segundos para asegurarse de que la aplicación esté en ejecución
       - name: Wait for app to start
-        run: sleep 10
+        run: sleep 15
 
       # Paso 5: Realizar pruebas con OWASP ZAP
       - name: OWASP ZAP full scan
