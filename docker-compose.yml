@@ -17,3 +17,11 @@ services:
        - ./pm2/logs:/root/.pm2/logs
     env_file:
       - .env
+
+  zap:
+    image: owasp/zap2docker-stable
+    volumes:
+      - ./:/zap/wrk/
+    depends_on:
+      - dashback
+    command: zap-baseline.py -t http://dashback:3100
