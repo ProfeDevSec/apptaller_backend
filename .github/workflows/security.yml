@@ -1,12 +1,7 @@
 name: CI/CD Pipeline with OWASP ZAP
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-  schedule:
-    - cron: '35 9 * * 5'
+  workflow_dispatch
 
 jobs:
   deploy_and_test:
@@ -16,6 +11,9 @@ jobs:
       # Paso 1: Checkout del código fuente
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Create Docker network
+        run: docker network create taller-network
 
       # Paso 2: Configurar Docker
       - name: Set up Docker Buildx
@@ -27,7 +25,7 @@ jobs:
 
       # Paso 4: Iniciar el contenedor Docker en segundo plano
       - name: Run Docker container
-        run: docker run -d -p 3100:3100 --name backend_container backend:latest
+        run: docker run -d -p 3100:3100 --network taller-network --name backend_container backend:latest
 
       # Esperar unos segundos para asegurarse de que la aplicación esté en ejecución
       - name: Wait for app to start
