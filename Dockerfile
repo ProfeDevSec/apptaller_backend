@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:23-alpine
 # RUN apt-get -y update
 # && apt-get install -y default-jdk
 RUN mkdir /app
